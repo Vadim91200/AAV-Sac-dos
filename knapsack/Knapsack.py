@@ -6,8 +6,7 @@ class Knapsack:
         value = 0
         weight = 0
         for obj in self.content:
-            value += obj[0]
-            weight += obj[1]
+            pass
         return value, weight
     def print_content(self, objects_dist) -> None:
         for name in self.content:
