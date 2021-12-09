@@ -76,7 +76,7 @@ class TestUtils:
 class TestGreedySmall:
     def test_solve(self):
         sack, objects_dict = get_small_objects_dict()
-        filled_sack = solve_knapsack_greedy(knapsack=sack, objects_dict=objects_dict)
+        filled_sack = solve_knapsack_greedy(sack, objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (6544, 59)
 
     @pytest.mark.parametrize(
@@ -91,7 +91,7 @@ class TestGreedySmall:
         ])
     def test_solve_bigger(self, capacity, weight, value):
         sack, objects_dict = get_small_objects_dict(capacity)
-        filled_sack = solve_knapsack_greedy(knapsack=sack, objects_dict=objects_dict)
+        filled_sack = solve_knapsack_greedy(sack, objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (weight, value)
 
 
@@ -99,7 +99,7 @@ class TestGreedyMedium:
     def test_solve(self):
         sack = Knapsack(100)
         objects_dict = get_medium_objects_dict()
-        filled_sack = solve_knapsack_greedy(knapsack=sack, objects_dict=objects_dict)
+        filled_sack = solve_knapsack_greedy(sack,objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (118000455, 100)
 
     @pytest.mark.parametrize(
@@ -117,7 +117,7 @@ class TestGreedyMedium:
     def test_solve_medium(self, capacity, weight, value):
         sack = Knapsack(capacity)
         objects_dict = get_medium_objects_dict()
-        filled_sack = solve_knapsack_greedy(knapsack=sack, objects_dict=objects_dict)
+        filled_sack = solve_knapsack_greedy(sack,objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (weight, value)
         if capacity > 5:
             assert "Oeil et Main de Vecna" in sack.content
@@ -128,7 +128,7 @@ class TestGreedyMedium:
     def test_solve_big(self, capacity, weight, value):
         sack = Knapsack(capacity)
         objects_dict = get_medium_objects_dict()
-        filled_sack = solve_knapsack_greedy(knapsack=sack, objects_dict=objects_dict)
+        filled_sack = solve_knapsack_greedy(sack,objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (weight, value)
         if capacity > 5:
             assert "Oeil et Main de Vecna" in sack.content
