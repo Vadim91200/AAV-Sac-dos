@@ -80,7 +80,7 @@ class TestGreedySmall:
         assert filled_sack.get_value_and_weight(objects_dict) == (6544, 59)
 
     @pytest.mark.parametrize(
-        "capacity, weight, value",
+        "capacity, value, weight",
         [
             (1000, 7285, 94),
             (100, 7285, 94),
@@ -92,7 +92,7 @@ class TestGreedySmall:
     def test_solve_bigger(self, capacity, weight, value):
         sack, objects_dict = get_small_objects_dict(capacity)
         filled_sack = solve_knapsack_greedy(sack, objects_dict)
-        assert filled_sack.get_value_and_weight(objects_dict) == (weight, value)
+        assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
 
 
 class TestGreedyMedium:
@@ -103,7 +103,7 @@ class TestGreedyMedium:
         assert filled_sack.get_value_and_weight(objects_dict) == (118000455, 100)
 
     @pytest.mark.parametrize(
-        "capacity, weight, value",
+        "capacity, value, weight",
         [
             (10000, 203583402, 9723),
             (1000, 163881015, 1000),
@@ -118,7 +118,7 @@ class TestGreedyMedium:
         sack = Knapsack(capacity)
         objects_dict = get_medium_objects_dict()
         filled_sack = solve_knapsack_greedy(sack,objects_dict)
-        assert filled_sack.get_value_and_weight(objects_dict) == (weight, value)
+        assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
         if capacity > 5:
             assert "Oeil et Main de Vecna" in sack.content
 
