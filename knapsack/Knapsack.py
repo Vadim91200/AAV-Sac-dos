@@ -2,6 +2,10 @@ class Knapsack:
     def __init__(self, capacity):
         self.capacity = capacity
         self.content = []
+    def copy(self):
+        knapsack = Knapsack(self.capacity)
+        knapsack.content.extend(self.content)
+        return knapsack
     def get_value_and_weight(self, objects_dist):
         value = 0
         weight = 0
