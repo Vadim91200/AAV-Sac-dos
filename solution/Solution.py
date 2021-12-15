@@ -16,16 +16,15 @@ def knapsack_recursive(knapsack, objects_dict, objects_list, currentIndex):
   if knapsack.capacity - knapsack.get_value_and_weight(objects_dict)[1] <= 0 or currentIndex >= len(objects_list):
     return knapsack
 
-  knapsack1 = knapsack.copy()
-  knapsack2 = knapsack.copy()
+  firstknapsack = knapsack.copy()
+  secondknapsack = knapsack.copy()
   if knapsack.get_value_and_weight(objects_dict)[1] + objects_list[currentIndex][1][1] <= knapsack.capacity:
-      knapsack1.content.append(objects_list[currentIndex][0])
-      knapsack1 = knapsack_recursive(
-    knapsack1, objects_dict, objects_list, currentIndex + 1)
+      firstknapsack.content.append(objects_list[currentIndex][0])
+      firstknapsack = knapsack_recursive(firstknapsack, objects_dict, objects_list, currentIndex + 1)
+  else:
+      secondknapsack = knapsack_recursive(secondknapsack, objects_dict, objects_list, currentIndex + 1)
 
-  knapsack2 = knapsack_recursive(
-    knapsack2, objects_dict, objects_list, currentIndex + 1)
-
-  if knapsack1.get_value_and_weight(objects_dict)[0] > knapsack2.get_value_and_weight(objects_dict)[0]:
-      return knapsack1
-  return knapsack2
+  if firstknapsack.get_value_and_weight(objects_dict)[0] > secondknapsack.get_value_and_weight(objects_dict)[0]:
+      return firstknapsack
+  else:
+      return secondknapsack
