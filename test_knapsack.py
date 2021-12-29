@@ -5,6 +5,7 @@ from solution.Solution import solve_knapsack_greedy
 from solution.Solution import solve_knapsack_best
 from solution.Solution import solve_knapsack_optimal
 
+
 def get_small_objects_dict(capacity=60):
     small_objects_dict = {
         "Épée de lumière lunaire": [909, 6],
@@ -99,7 +100,7 @@ class TestGreedyMedium:
     def test_solve(self):
         sack = Knapsack(100)
         objects_dict = get_medium_objects_dict()
-        filled_sack = solve_knapsack_greedy(sack,objects_dict)
+        filled_sack = solve_knapsack_greedy(sack, objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (118000455, 100)
 
     @pytest.mark.parametrize(
@@ -117,7 +118,7 @@ class TestGreedyMedium:
     def test_solve_medium(self, capacity, weight, value):
         sack = Knapsack(capacity)
         objects_dict = get_medium_objects_dict()
-        filled_sack = solve_knapsack_greedy(sack,objects_dict)
+        filled_sack = solve_knapsack_greedy(sack, objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
         if capacity > 5:
             assert "Oeil et Main de Vecna" in sack.content
@@ -128,7 +129,103 @@ class TestGreedyMedium:
     def test_solve_big(self, capacity, weight, value):
         sack = Knapsack(capacity)
         objects_dict = get_medium_objects_dict()
-        filled_sack = solve_knapsack_greedy(sack,objects_dict)
+        filled_sack = solve_knapsack_greedy(sack, objects_dict)
         assert filled_sack.get_value_and_weight(objects_dict) == (weight, value)
+        if capacity > 5:
+            assert "Oeil et Main de Vecna" in sack.content
+
+
+class TestBestSmall:
+    def test_solve(self):
+        sack, objects_dict = get_small_objects_dict()
+        filled_sack = solve_knapsack_best(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (6544, 59)
+
+    @pytest.mark.parametrize(
+        "capacity, value, weight",
+        [
+            (1000, 7285, 94),
+            (100, 7285, 94),
+            (50, 6009, 50),
+            (10, 1753, 9),
+            (5, 1028, 5),
+            (0, 0, 0),
+        ])
+    def test_solve_bigger(self, capacity, weight, value):
+        sack, objects_dict = get_small_objects_dict(capacity)
+        filled_sack = solve_knapsack_best(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
+
+
+class TestBestMedium:
+    def test_solve(self):
+        sack = Knapsack(100)
+        objects_dict = get_medium_objects_dict()
+        filled_sack = solve_knapsack_best(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (120360447, 100)
+
+    @pytest.mark.parametrize(
+        "capacity, value, weight",
+        [
+            (10000, 203628503, 10000),
+            (1000, 163881020, 1000),
+            (100, 120360447, 100),
+            (50, 84260426, 50),
+            (10, 18220131, 10),
+            (5, 260148, 5),
+            (3, 180019, 3),
+            (1, 40081, 1),
+        ])
+    def test_solve_medium(self, capacity, weight, value):
+        sack = Knapsack(capacity)
+        objects_dict = get_medium_objects_dict()
+        filled_sack = solve_knapsack_best(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
+        if capacity > 5:
+            assert "Oeil et Main de Vecna" in sack.content
+
+
+class TestOptimalSmall:
+    def test_solve(self):
+        sack, objects_dict = get_small_objects_dict()
+        filled_sack = solve_knapsack_optimal(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (6544, 59)
+
+    @pytest.mark.parametrize(
+        "capacity, value, weight",
+        [
+            (1000, 7285, 94),
+            (100, 7285, 94),
+            (50, 6009, 50),
+            (10, 1753, 9),
+            (5, 1028, 5),
+            (0, 0, 0),
+        ])
+    def test_solve_bigger(self, capacity, weight, value):
+        sack, objects_dict = get_small_objects_dict(capacity)
+        filled_sack = solve_knapsack_optimal(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
+
+
+class TestOptimalMedium:
+    def test_solve(self):
+        sack = Knapsack(5)
+        objects_dict = get_medium_objects_dict()
+        filled_sack = solve_knapsack_optimal(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (260148, 5)
+
+    @pytest.mark.parametrize(
+        "capacity, value, weight",
+        [
+            (4, 220100, 4),
+            (3, 180019, 3),
+            (2, 80129, 2),
+            (1, 40081, 1),
+        ])
+    def test_solve_medium(self, capacity, weight, value):
+        sack = Knapsack(capacity)
+        objects_dict = get_medium_objects_dict()
+        filled_sack = solve_knapsack_optimal(sack, objects_dict)
+        assert filled_sack.get_value_and_weight(objects_dict) == (value, weight)
         if capacity > 5:
             assert "Oeil et Main de Vecna" in sack.content
