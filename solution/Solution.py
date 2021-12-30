@@ -15,7 +15,7 @@ def solve_knapsack_best(knapsack, objects_dist):
     capacity = knapsack.capacity  # capacity of knapsack
 
 # create an empty matrix
-    matrix = np.zeros((numItems + 1, capacity + 1))  # rows representing items #columns representing capacity
+    matrix = np.zeros((numItems + 1, capacity + 1))  # rows representing items columns representing capacity
 
 # loop through table rows
     for i in range(1, numItems + 1):
