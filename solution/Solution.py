@@ -1,21 +1,21 @@
 import numpy as np
 
 
-def solve_knapsack_greedy(knapsack, objects_dist):
-    objects_dist1 = sorted(objects_dist.keys(), key=lambda item: (objects_dist[item][0] / objects_dist[item][1]), reverse=True)  # objects_dist1 sort by value/weight ratio
-    for obj in objects_dist1:
-        if knapsack.get_weight(objects_dist) + (objects_dist[obj][1]) <= knapsack.capacity:  # if the knapsack can hold the object
+def solve_knapsack_greedy(knapsack, objects_dict):
+    objects_dict1 = sorted(objects_dict.keys(), key=lambda item: (objects_dict[item][0] / objects_dict[item][1]), reverse=True)  # objects_dict1 sort by value/weight ratio
+    for obj in objects_dict1:
+        if knapsack.get_weight(objects_dict) + (objects_dict[obj][1]) <= knapsack.capacity:  # if the knapsack can hold the object
             knapsack.add_object(obj)  # add the object to the knapsack
     return knapsack
 
 
-def solve_knapsack_best(knapsack, objects_dist):
-    objects_list = list(objects_dist.items())  # convert the dictionary to a list
+def solve_knapsack_best(knapsack, objects_dict):
+    objects_list = list(objects_dict.items())  # convert the dictionary to a list
     numItems = len(objects_list)  # number of items in the knapsack
     capacity = knapsack.capacity  # capacity of knapsack
 
 # create an empty matrix
-    matrix = np.zeros((numItems + 1, capacity + 1))  # rows representing items columns representing capacity
+    matrix = np.zeros((numItems + 1, capacity + 1))  # rows represents items columns represents capacity
 
 # loop through table rows
     for i in range(1, numItems + 1):
@@ -29,10 +29,8 @@ def solve_knapsack_best(knapsack, objects_dist):
                 valueTwo = np.float64(objects_list[i - 1][1][0] + matrix[i - 1][w - objects_list[i - 1][1][1]])
                 # take maximum of either valueOne or valueTwo
                 matrix[i][w] = int(max(valueOne, valueTwo))
-
             else:  # if weight of the current item is greater than the capacity
                 matrix[i][w] = matrix[i - 1][w]
-
     checkItem(knapsack, numItems, capacity, objects_list, matrix)
     return knapsack
 
@@ -54,25 +52,25 @@ def checkItem(knapsack, numItems, capacity, objects_list, matrix):
         checkItem(knapsack, numItems - 1, capacity, objects_list, matrix)
 
 
-def solve_knapsack_optimal(knapsack, objects_dist):
-    Dictionnairemodifier = objects_dist.copy()
-    Dictionnairemodifier = list(Dictionnairemodifier.items())
-    return knapsack_recursive(knapsack, objects_dist, Dictionnairemodifier, 0)
+def solve_knapsack_optimal(knapsack, objects_dict):
+    changedDictionary = objects_dict.copy()
+    ListDictionary = list(changedDictionary.items())
+    return knapsack_recursive(knapsack, objects_dict, ListDictionary, 0)
 
 
 def knapsack_recursive(knapsack, objects_dict, objects_list, currentIndex):
-    firstknapsack = knapsack.copy()
-    secondknapsack = knapsack.copy()
-    # if the knapsack is full or the current index is is higher than  len of objects_list
+    # if the knapsack is full or the current index is higher than len of objects_list
     if knapsack.capacity - knapsack.get_weight(objects_dict) <= 0 or currentIndex >= len(objects_list):
         return knapsack
+    modifiedsack = knapsack.copy()
+    untouchedsack = knapsack.copy()
     # if the knapsack can hold the current object
     if knapsack.get_weight(objects_dict) + objects_list[currentIndex][1][1] <= knapsack.capacity:
-        firstknapsack.add_object(objects_list[currentIndex][0])
-        firstknapsack = knapsack_recursive(firstknapsack, objects_dict, objects_list, currentIndex + 1)
-
-    secondknapsack = knapsack_recursive(secondknapsack, objects_dict, objects_list, currentIndex + 1)
+        modifiedsack.add_object(objects_list[currentIndex][0])
+        modifiedsack = knapsack_recursive(modifiedsack, objects_dict, objects_list, currentIndex + 1)
+    # otherwise
+    untouchedsack = knapsack_recursive(untouchedsack, objects_dict, objects_list, currentIndex + 1)
     # return the knapsack with the highest value
-    if firstknapsack.get_value(objects_dict) > secondknapsack.get_value(objects_dict):
-        return firstknapsack
-    return secondknapsack
+    if modifiedsack.get_value(objects_dict) > untouchedsack.get_value(objects_dict):
+        return modifiedsack
+    return untouchedsack
