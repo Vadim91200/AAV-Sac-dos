@@ -22,7 +22,7 @@ The problem is to find the maximum value of a subset of items that can be put in
 The code is written in Python 3.10
 
 The code meets the PEP8 standard
-![radon](https://user-images.githubusercontent.com/62403530/147815857-0af7b6dd-8e69-48bf-b463-2e9d9eb2ae02.png)
+![flake8](https://user-images.githubusercontent.com/62403530/147885938-082eb5f5-30d0-4140-aedb-49a713f340b3.jpg)
 All the algorithm has an A with radon 
 ![radon](https://user-images.githubusercontent.com/62403530/147815857-0af7b6dd-8e69-48bf-b463-2e9d9eb2ae02.png)
 
