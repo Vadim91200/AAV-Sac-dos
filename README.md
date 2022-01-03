@@ -30,6 +30,9 @@ All the algorithm has an A with radon
 
 The code is tested with the test_knapsack.py file
 
+I have left all the branchs of the pull requests on purpose so that I can show the development cycle.
+Our teachers ask us to leave them. **sorry for the purists :( ** 
+
 ## Credit:
 
 *This project was carried out for a course of advanced algorithmic at the University of Paris*
